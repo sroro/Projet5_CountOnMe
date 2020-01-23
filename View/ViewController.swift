@@ -14,6 +14,7 @@ class ViewController: UIViewController {
     
     var calcul = Calculator()
     
+
     
     // View Life cycles
     override func viewDidLoad() {
@@ -55,7 +56,8 @@ class ViewController: UIViewController {
     }
     
     @objc func displayError(){
-        let alertVC = UIAlertController(title: "Zéro!", message: "Un operateur est déja mis !", preferredStyle: .alert)
+        let messsage = "Un operateur est déja mis !"
+        let alertVC = UIAlertController(title: "Zéro!", message: messsage, preferredStyle: .alert)
                   alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
                   self.present(alertVC, animated: true, completion: nil)
     }
@@ -70,6 +72,7 @@ class ViewController: UIViewController {
            alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
            return self.present(alertVC, animated: true, completion: nil)
        }
+    
 
 }
 
