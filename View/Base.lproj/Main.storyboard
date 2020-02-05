@@ -198,19 +198,73 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="60"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="3UT-iS-i74">
+                                <rect key="frame" x="20" y="597" width="371.5" height="113"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jDC-yG-B6V" userLabel="*">
+                                        <rect key="frame" x="0.0" y="0.0" width="114" height="113"/>
+                                        <color key="backgroundColor" red="0.10942472643107989" green="0.58623665580473561" blue="0.60227890212301149" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="113" id="0Yk-Kw-a1r"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="42"/>
+                                        <state key="normal" title="*">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="tappedMultiplicationButton:" destination="eqK-jh-KKu" eventType="touchUpInside" id="PoL-rI-L5g"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f4Q-Se-vcU" userLabel="/">
+                                        <rect key="frame" x="129" y="0.0" width="114" height="113"/>
+                                        <color key="backgroundColor" red="0.39330339014495042" green="0.41804267492211805" blue="0.72067109877581426" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="113" id="aGo-KD-plC"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="42"/>
+                                        <state key="normal" title="/">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="tappedDivisionButton:" destination="eqK-jh-KKu" eventType="touchUpInside" id="UBX-x0-6A2"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XQS-C9-IhL" userLabel="AC">
+                                        <rect key="frame" x="258" y="0.0" width="113.5" height="113"/>
+                                        <color key="backgroundColor" red="0.44590017256515024" green="0.61316708116333718" blue="0.26380846370739941" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="113" id="ZSc-HV-1Ts"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="42"/>
+                                        <state key="normal" title="AC">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="tappedResetButton:" destination="eqK-jh-KKu" eventType="touchUpInside" id="K5G-n2-LNh"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="jDC-yG-B6V" firstAttribute="leading" secondItem="3UT-iS-i74" secondAttribute="leading" id="tbZ-RF-rd5"/>
+                                </constraints>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" red="0.87536688539999996" green="0.84808511389999996" blue="0.83804947389999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="isI-Gg-Iye" firstAttribute="top" secondItem="T2H-yn-nBB" secondAttribute="bottom" constant="36" id="0S1-YK-7n7"/>
                             <constraint firstItem="ogr-Aw-e1h" firstAttribute="leading" secondItem="AWJ-Vl-uau" secondAttribute="leading" constant="22.670000000000002" id="4tP-14-I9H"/>
                             <constraint firstItem="isI-Gg-Iye" firstAttribute="leading" secondItem="T2H-yn-nBB" secondAttribute="leading" id="B8E-6d-xgb"/>
+                            <constraint firstItem="ogr-Aw-e1h" firstAttribute="top" secondItem="3UT-iS-i74" secondAttribute="bottom" constant="39" id="Dvb-MJ-ypZ"/>
                             <constraint firstItem="Fhl-dE-gDl" firstAttribute="top" secondItem="ogr-Aw-e1h" secondAttribute="bottom" id="Kyj-0f-YWp"/>
                             <constraint firstItem="isI-Gg-Iye" firstAttribute="trailing" secondItem="T2H-yn-nBB" secondAttribute="trailing" id="LN4-hA-vt5"/>
+                            <constraint firstItem="ogr-Aw-e1h" firstAttribute="leading" secondItem="3UT-iS-i74" secondAttribute="leading" constant="2.5" id="PfY-FT-ofy"/>
                             <constraint firstItem="T2H-yn-nBB" firstAttribute="top" secondItem="tQO-Y2-VWE" secondAttribute="bottom" id="Q0b-Sc-De1"/>
                             <constraint firstItem="ogr-Aw-e1h" firstAttribute="trailing" secondItem="T2H-yn-nBB" secondAttribute="trailing" id="Qbh-nw-WQb"/>
                             <constraint firstItem="AWJ-Vl-uau" firstAttribute="trailing" secondItem="ogr-Aw-e1h" secondAttribute="trailing" constant="22.329999999999998" id="TAd-Hl-Jm9"/>
                             <constraint firstItem="ogr-Aw-e1h" firstAttribute="leading" secondItem="isI-Gg-Iye" secondAttribute="leading" id="k0g-vY-9A7"/>
+                            <constraint firstItem="ogr-Aw-e1h" firstAttribute="trailing" secondItem="3UT-iS-i74" secondAttribute="trailing" id="pgK-67-oex"/>
                             <constraint firstItem="ogr-Aw-e1h" firstAttribute="leading" secondItem="T2H-yn-nBB" secondAttribute="leading" id="qcn-ZP-YJK"/>
+                            <constraint firstItem="3UT-iS-i74" firstAttribute="top" secondItem="isI-Gg-Iye" secondAttribute="bottom" constant="46" id="qsf-yc-hgC"/>
                             <constraint firstItem="isI-Gg-Iye" firstAttribute="centerY" secondItem="eIh-hr-C95" secondAttribute="centerY" id="r8E-mH-in4"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="AWJ-Vl-uau"/>

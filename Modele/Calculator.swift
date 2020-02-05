@@ -50,45 +50,79 @@ class Calculator {
                  calculString.append(" + ")
             case " - ":
                  calculString.append(" - ")
+            case " * ":
+                 calculString.append(" * ")
+            case " / ":
+                 calculString.append(" / ")
             default:
-                 NotificationCenter.default.post(Notification(name: Notification.Name("error")))
+                break
             }
-          
-        } else {
-             NotificationCenter.default.post(Notification(name: Notification.Name("error")))
+            } else {
+            NotificationCenter.default.post(Notification(name: Notification.Name("error"), userInfo: ["message":"Un operateur est déja mis !"]))
+            }
         }
-    }
     
     func equal() {
         guard expressionIsCorrect else {
-                  return     NotificationCenter.default.post(Notification(name: Notification.Name("error2")))
+            return     NotificationCenter.default.post(Notification(name: Notification.Name("error"), userInfo: ["message":"Entrez une expression correcte"]))
                }
                
                guard expressionHaveEnoughElement else {
-                 return    NotificationCenter.default.post(Notification(name: Notification.Name("error3")))
+                 return    NotificationCenter.default.post(Notification(name: Notification.Name("error"), userInfo: ["message":"Commencez un nouveau calcul"]))
                }
                
                // Create local copy of operations
                var operationsToReduce = elements
                
                // Iterate over operations while an operand still here
+        // https://openclassrooms.com/fr/courses/4287521-apprenez-les-fondamentaux-de-swift/4328711-comprenez-les-optionnels
                while operationsToReduce.count > 1 {
-                   let left = Int(operationsToReduce[0])!
-                   let operand = operationsToReduce[1]
-                   let right = Int(operationsToReduce[2])!
+                
+                   var left = Double(operationsToReduce[0])!
+                   var operand = operationsToReduce[1]
+                   var right = Double(operationsToReduce[2])!
                    
-                   let result: Int
-                   switch operand {
-                   case "+": result = left + right
-                   case "-": result = left - right
-                   default: fatalError("Unknown operator !")
-                   }
+                   var operandIndex = 1 // car aucun signe sera a l'index 0 de base sinon erreur
                    
-                   operationsToReduce = Array(operationsToReduce.dropFirst(3))
-                   operationsToReduce.insert("\(result)", at: 0)
+                let result: Double
+                
+               if let index = operationsToReduce.firstIndex(where: {["*","/"].contains($0)}){
+              
+                     operandIndex = index
+                     left = Double(operationsToReduce[index - 1])!
+                     operand = operationsToReduce[index]
+                     right = Double(operationsToReduce[index + 1])!
+                    
+                }
+                 
+                result = calculate(left: left, right: right, operand: operand)
+                print(result)
+                
+                for _ in 1...3 {
+                  
+                    operationsToReduce.remove(at: operandIndex - 1)
+                    print(operationsToReduce)
+                    print(result)
+                }
+                
+                   operationsToReduce.insert("\(result)", at: operandIndex - 1 )
+                    print(operationsToReduce)
                }
                
                calculString.append(" = \(operationsToReduce.first!)")
     }
     
+    
+    
+ func calculate(left: Double, right: Double, operand: String) -> Double {
+        let result: Double
+        switch operand {
+        case "+": result = left + right
+        case "-": result = left - right
+        case "*": result = left * right
+        case "/": result = left / right
+        default: fatalError("Unknown operator !")
+        }
+        return result
+    }
 }
