@@ -21,7 +21,7 @@ class Calculator {
     
     // Error check computed variables
        var expressionIsCorrect: Bool {
-           return elements.last != "+" && elements.last != "-"
+           return elements.last != "+" && elements.last != "-" && elements.last != "x" && elements.last != "/"
        }
        
        var expressionHaveEnoughElement: Bool {
@@ -29,12 +29,16 @@ class Calculator {
        }
        
        var canAddOperator: Bool {
-        return elements.last != "+" && elements.last != "-"
+           return elements.last != "+" && elements.last != "-" && elements.last != "x" && elements.last != "/"
        }
        
        var expressionHaveResult: Bool {
            return calculString.firstIndex(of: "=") != nil
        }
+    
+       var divideByZero: Bool {
+           return calculString.contains("÷ 0")
+      }
     
     func addNumber(_ number: String){
         if expressionHaveResult {
@@ -51,7 +55,7 @@ class Calculator {
             case " - ":
                  calculString.append(" - ")
             case " * ":
-                 calculString.append(" * ")
+                 calculString.append(" x ")
             case " / ":
                  calculString.append(" / ")
             default:
@@ -67,15 +71,21 @@ class Calculator {
             return     NotificationCenter.default.post(Notification(name: Notification.Name("error"), userInfo: ["message":"Entrez une expression correcte"]))
                }
                
-               guard expressionHaveEnoughElement else {
-                 return    NotificationCenter.default.post(Notification(name: Notification.Name("error"), userInfo: ["message":"Commencez un nouveau calcul"]))
+        guard expressionHaveEnoughElement else {
+            return    NotificationCenter.default.post(Notification(name: Notification.Name("error"), userInfo: ["message":"Commencez un nouveau calcul"]))
                }
+        
+        
+        guard divideByZero == true else {
+            calculString = ""
+            return    NotificationCenter.default.post(Notification(name: Notification.Name("error"), userInfo: ["message":"Division par 0 impossible"]))
+              }
+        
                
                // Create local copy of operations
                var operationsToReduce = elements
                
                // Iterate over operations while an operand still here
-        // https://openclassrooms.com/fr/courses/4287521-apprenez-les-fondamentaux-de-swift/4328711-comprenez-les-optionnels
                while operationsToReduce.count > 1 {
                 
                    var left = Double(operationsToReduce[0])!
@@ -86,32 +96,24 @@ class Calculator {
                    
                 let result: Double
                 
-               if let index = operationsToReduce.firstIndex(where: {["*","/"].contains($0)}){
+               if let index = operationsToReduce.firstIndex(where: {["x","/"].contains($0)}){
               
                      operandIndex = index
                      left = Double(operationsToReduce[index - 1])!
                      operand = operationsToReduce[index]
                      right = Double(operationsToReduce[index + 1])!
-                    
                 }
-                 
                 result = calculate(left: left, right: right, operand: operand)
-                print(result)
-                
+            
                 for _ in 1...3 {
-                  
                     operationsToReduce.remove(at: operandIndex - 1)
-                    print(operationsToReduce)
-                    print(result)
                 }
                 
                    operationsToReduce.insert("\(result)", at: operandIndex - 1 )
-                    print(operationsToReduce)
                }
                
                calculString.append(" = \(operationsToReduce.first!)")
     }
-    
     
     
  func calculate(left: Double, right: Double, operand: String) -> Double {
@@ -119,7 +121,7 @@ class Calculator {
         switch operand {
         case "+": result = left + right
         case "-": result = left - right
-        case "*": result = left * right
+        case "x": result = left * right
         case "/": result = left / right
         default: fatalError("Unknown operator !")
         }
