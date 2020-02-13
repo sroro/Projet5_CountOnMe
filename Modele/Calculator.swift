@@ -37,7 +37,7 @@ class Calculator {
        }
     
        var divideByZero: Bool {
-           return calculString.contains("÷ 0")
+           return calculString.contains("/ 0")
       }
     
     func addNumber(_ number: String){
@@ -76,7 +76,7 @@ class Calculator {
                }
         
         
-        guard divideByZero == true else {
+        guard divideByZero == false else {
             calculString = ""
             return    NotificationCenter.default.post(Notification(name: Notification.Name("error"), userInfo: ["message":"Division par 0 impossible"]))
               }
