@@ -109,7 +109,7 @@ class Calculator {
                     operationsToReduce.remove(at: operandIndex - 1)
                 }
                 
-                   operationsToReduce.insert("\(result)", at: operandIndex - 1 )
+                operationsToReduce.insert("\(result.clean)", at: operandIndex - 1 )
                }
                
                calculString.append(" = \(operationsToReduce.first!)")
@@ -127,4 +127,12 @@ class Calculator {
         }
         return result
     }
+    
 }
+
+extension Double {
+    var clean: String {
+       return self.truncatingRemainder(dividingBy: 1) == 0 ? String(format: "%.0f", self) : String(self)
+    }
+}
+
