@@ -46,8 +46,16 @@ class Calculator {
         }
         calculString.append(number)
     }
+    func result() {
+        if expressionHaveResult{
+            if let resultat = elements.last {
+                   calculString = resultat
+            }
+        }
+    }
     
     func addOperattor(_ element: String){
+        result()
         if canAddOperator {
             switch element {
             case " + ":
@@ -67,21 +75,24 @@ class Calculator {
         }
     
     func equal() {
+        guard !expressionHaveResult else {
+           return     NotificationCenter.default.post(Notification(name: Notification.Name("error"), userInfo: ["message":"Entrez une nouvelle opération"]))
+        }
+        
         guard expressionIsCorrect else {
+            calculString = ""
             return     NotificationCenter.default.post(Notification(name: Notification.Name("error"), userInfo: ["message":"Entrez une expression correcte"]))
-               }
+        }
                
         guard expressionHaveEnoughElement else {
             return    NotificationCenter.default.post(Notification(name: Notification.Name("error"), userInfo: ["message":"Commencez un nouveau calcul"]))
-               }
-        
+        }
         
         guard divideByZero == false else {
             calculString = ""
             return    NotificationCenter.default.post(Notification(name: Notification.Name("error"), userInfo: ["message":"Division par 0 impossible"]))
-              }
+        }
         
-               
                // Create local copy of operations
                var operationsToReduce = elements
                
@@ -109,9 +120,9 @@ class Calculator {
                     operationsToReduce.remove(at: operandIndex - 1)
                 }
                 
-                operationsToReduce.insert("\(result.clean)", at: operandIndex - 1 )
+                operationsToReduce.insert(formatResult(result: result), at: operandIndex - 1 )
                }
-               
+    
                calculString.append(" = \(operationsToReduce.first!)")
     }
     
@@ -128,11 +139,17 @@ class Calculator {
         return result
     }
     
+/* fonction pour formater le resultat a max 2 chiffre apres virgule,
+    si le chiffre fini par .0 alors affiche entier */
+    func formatResult(result: Double) -> String {
+      let formatter = NumberFormatter()
+      formatter.minimumFractionDigits = 0
+      formatter.maximumFractionDigits = 2
+      guard let resultFormated = formatter.string(from: NSNumber(value: result)) else { return String()
+      }
+      return resultFormated
+    }
+    
 }
 
-extension Double {
-    var clean: String {
-       return self.truncatingRemainder(dividingBy: 1) == 0 ? String(format: "%.0f", self) : String(self)
-    }
-}
 
