@@ -46,6 +46,9 @@ class Calculator {
         }
         calculString.append(number)
     }
+    
+    /* f I have a result, put in a var the last element (so the result)
+         therefore calculString will display the result */
     func result() {
         if expressionHaveResult{
             if let resultat = elements.last {
@@ -103,7 +106,7 @@ class Calculator {
                    var operand = operationsToReduce[1]
                    var right = Double(operationsToReduce[2])!
                    
-                   var operandIndex = 1 // car aucun signe sera a l'index 0 de base sinon erreur
+                   var operandIndex = 1 // because no sign will be at base index 0 otherwise error
                    
                 let result: Double
                 
@@ -113,10 +116,11 @@ class Calculator {
                      left = Double(operationsToReduce[index - 1])!
                      operand = operationsToReduce[index]
                      right = Double(operationsToReduce[index + 1])!
+                
                 }
                 result = calculate(left: left, right: right, operand: operand)
-            
-                for _ in 1...3 {
+                
+               for _ in 1...3 {
                     operationsToReduce.remove(at: operandIndex - 1)
                 }
                 
@@ -125,7 +129,6 @@ class Calculator {
     
                calculString.append(" = \(operationsToReduce.first!)")
     }
-    
     
  func calculate(left: Double, right: Double, operand: String) -> Double {
         let result: Double
@@ -139,11 +142,10 @@ class Calculator {
         return result
     }
     
-/* fonction pour formater le resultat a max 2 chiffre apres virgule,
-    si le chiffre fini par .0 alors affiche entier */
+/* function to format the result at max 2 digits after comma,
+     if the number ends in .0 then displays whole */
     func formatResult(result: Double) -> String {
       let formatter = NumberFormatter()
-      formatter.minimumFractionDigits = 0
       formatter.maximumFractionDigits = 2
       guard let resultFormated = formatter.string(from: NSNumber(value: result)) else { return String()
       }

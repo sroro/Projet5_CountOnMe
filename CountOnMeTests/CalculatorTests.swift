@@ -70,7 +70,7 @@ class CalculatorTests: XCTestCase {
     }
     
     
-    // test du break dans addOperator
+    // test break in addOperator
     func testGivenCalculstringIsEmpty_WhenDOperation_ThenHaveResult(){
         
         calculator.addNumber("1")
@@ -79,7 +79,6 @@ class CalculatorTests: XCTestCase {
         calculator.equal()
         
         XCTAssertEqual(calculator.calculString, "11")
-        
     }
     
     func testGivenCalculIsEmpty_WhenResult_ThenResultIsNil(){
@@ -89,10 +88,10 @@ class CalculatorTests: XCTestCase {
         calculator.addNumber("4")
         calculator.equal()
         calculator.addOperattor(" / ")
-        calculator.addNumber("2")
+        calculator.addNumber("5")
         calculator.equal()
                 
-        XCTAssertFalse(calculator.calculString == "5")
+        XCTAssertFalse(calculator.calculString == "2")
           }
     
     func testGivenCalculIsEmpty_WhenResultAndAddNumber_ThenResultIsNil(){
