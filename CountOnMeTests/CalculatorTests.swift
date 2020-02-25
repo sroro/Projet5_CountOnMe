@@ -21,19 +21,16 @@ class CalculatorTests: XCTestCase {
     // MARK: - test unitaire
     
     // test isCorrect
-    func testGivenNumberOne_WhenLastElementIsLess_ThenExpressionIsNotCorrect() {
+    func testGivenNumberOne_WhenLastElementIsMore_ThenExpressionIsNotCorrect() {
         calculator.addNumber("1")
         calculator.addOperattor(" + ")
-        calculator.equal()
-        XCTAssertTrue(calculator.expressionIsCorrect)
+        XCTAssertFalse(calculator.expressionIsCorrect)
         
     }
     
      // test addOperator ( + )
     func testGivenCalculstringIsEmpty_WhenMakeOperation_ThenHaveResult(){
-        calculator.addNumber("1")
-        calculator.addOperattor(" + ")
-        calculator.addNumber("1")
+        calculator.calculString = "1 + 1"
         calculator.equal()
         XCTAssertEqual(calculator.calculString, "1 + 1 = 2")
         
@@ -48,7 +45,7 @@ class CalculatorTests: XCTestCase {
     }
     
     // test notification "entrer une expression correct"
-    func testGivenCalculStringLastWithOperator2_WhenAddingOperator_ThenNotificationTriggered(){
+    func testGivenCalculStringLastWithOperator_WhenMakingCalculation_ThenNotificationTriggered(){
         calculator.calculString = "2 + "
         expectation(forNotification: NSNotification.Name(rawValue: "error"), object: nil, handler: nil)
         calculator.equal()
@@ -66,12 +63,11 @@ class CalculatorTests: XCTestCase {
         calculator.equal()
         
         XCTAssertEqual(calculator.calculString, "1 - 1 = 0")
-        
     }
     
     
     // test break in addOperator
-    func testGivenCalculstringIsEmpty_WhenDOperation_ThenHaveResult(){
+    func testGivenCalculstringIsEmpty_WhenDoOperation_ThenHaveResult(){
         
         calculator.addNumber("1")
         calculator.addOperattor(" d ")
@@ -81,7 +77,7 @@ class CalculatorTests: XCTestCase {
         XCTAssertEqual(calculator.calculString, "11")
     }
     
-    func testGivenCalculIsEmpty_WhenResult_ThenResultIsNil(){
+    func testGivenCalculIsEmpty_WhenMakingVariousOperation_ThenResultIsGood(){
           
         calculator.addNumber("6")
         calculator.addOperattor(" + ")
@@ -91,19 +87,16 @@ class CalculatorTests: XCTestCase {
         calculator.addNumber("5")
         calculator.equal()
                 
-        XCTAssertFalse(calculator.calculString == "2")
+        XCTAssertTrue(calculator.calculString == "10 / 5 = 2")
           }
     
-    func testGivenCalculIsEmpty_WhenResultAndAddNumber_ThenResultIsNil(){
+    func testGivenCalculHasBeenMade_WhenResultAndAddNumber_ThenResultIsNewNumber(){
     
-                calculator.addNumber("6")
-                calculator.addOperattor(" + ")
-                calculator.addNumber("4")
-                calculator.equal()
+                calculator.calculString = "6 + 4 = 10"
                 calculator.addNumber("2")
           
                 
-       XCTAssertFalse(calculator.calculString == "")
+        XCTAssertEqual(calculator.calculString, "2")
     }
     
     
@@ -139,7 +132,6 @@ class CalculatorTests: XCTestCase {
            calculator.equal()
            
            XCTAssertEqual(calculator.calculString, "2 x 3 = 6")
-           
        }
     
     func testGivenCalculstringIsEmpty_WhenMakeDivisionOperation_ThenHaveResult(){
