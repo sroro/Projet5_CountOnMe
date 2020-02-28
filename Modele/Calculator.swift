@@ -47,35 +47,64 @@ class Calculator {
         calculString.append(number)
     }
     
-    /* f I have a result, put in a var the last element (so the result)
+        var canStartByOperator: Bool {
+           if calculString >= "0" && calculString <= "9" {
+               return elements.count >= 1
+           } else {
+              NotificationCenter.default.post(Notification(name: Notification.Name("error"), userInfo: ["message":"Commencez par un chiffre"]))
+           }
+           return false
+       }
+    
+    func addition() {
+        if canAddOperator && canStartByOperator {
+           result()
+           calculString.append(" + ")
+        } else {
+           NotificationCenter.default.post(Notification(name: Notification.Name("error"), userInfo: ["message":"Un operateur est déja mis !"]))
+       }
+    }
+    
+    func substraction() {
+      if canAddOperator && canStartByOperator {
+            result()
+            calculString.append(" - ")
+         } else {
+            NotificationCenter.default.post(Notification(name: Notification.Name("error"), userInfo: ["message":"Un operateur est déja mis !"]))
+        }
+    }
+    
+    func multiplication() {
+       if canAddOperator && canStartByOperator {
+            result()
+            calculString.append(" x ")
+         } else {
+            NotificationCenter.default.post(Notification(name: Notification.Name("error"), userInfo: ["message":"Un operateur est déja mis !"]))
+        }
+    }
+    
+    func division() {
+       if canAddOperator && canStartByOperator {
+            result()
+            calculString.append(" / ")
+         } else {
+            NotificationCenter.default.post(Notification(name: Notification.Name("error"), userInfo: ["message":"Un operateur est déja mis !"]))
+        }
+    }
+    
+    func reset() {
+        calculString = ""
+    }
+    
+    /*  If have a result, put in a var the last element (so the result)
          therefore calculString will display the result */
     func result() {
         if expressionHaveResult{
-            if let resultat = elements.last {
+           if let resultat = elements.last {
                    calculString = resultat
             }
         }
     }
-    
-    func addOperattor(_ element: String){
-        result()
-        if canAddOperator {
-            switch element {
-            case " + ":
-                 calculString.append(" + ")
-            case " - ":
-                 calculString.append(" - ")
-            case " * ":
-                 calculString.append(" x ")
-            case " / ":
-                 calculString.append(" / ")
-            default:
-                break
-            }
-            } else {
-            NotificationCenter.default.post(Notification(name: Notification.Name("error"), userInfo: ["message":"Un operateur est déja mis !"]))
-            }
-        }
     
     func equal() {
         guard !expressionHaveResult else {
@@ -102,22 +131,21 @@ class Calculator {
                // Iterate over operations while an operand still here
                while operationsToReduce.count > 1 {
                 
-                   var left = Double(operationsToReduce[0])!
+                   guard var left = Double(operationsToReduce[0]) else { return }
                    var operand = operationsToReduce[1]
-                   var right = Double(operationsToReduce[2])!
-                   
+                   guard var right = Double(operationsToReduce[2]) else { return }
                    var operandIndex = 1 // because no sign will be at base index 0 otherwise error
-                   
+               
                 let result: Double
                 
-               if let index = operationsToReduce.firstIndex(where: {["x","/"].contains($0)}){
-              
+                // check if operation have operator * or / for make priority of calcul
+                if let index = operationsToReduce.firstIndex(where: {["x","/"].contains($0)}){
                      operandIndex = index
-                     left = Double(operationsToReduce[index - 1])!
-                     operand = operationsToReduce[index]
-                     right = Double(operationsToReduce[index + 1])!
-                
+                if let leftUnwrap = Double(operationsToReduce[index - 1]) { left = leftUnwrap}
+                      operand = operationsToReduce[index]
+                if let rightUnwrap = Double(operationsToReduce[index + 1]) { right = rightUnwrap}
                 }
+                
                 result = calculate(left: left, right: right, operand: operand)
                 
                for _ in 1...3 {
@@ -144,10 +172,10 @@ class Calculator {
     
 /* function to format the result at max 2 digits after comma,
      if the number ends in .0 then displays whole */
-    func formatResult(result: Double) -> String {
+    func formatResult(result: Double) -> String! {
       let formatter = NumberFormatter()
       formatter.maximumFractionDigits = 2
-      guard let resultFormated = formatter.string(from: NSNumber(value: result)) else { return String()
+      guard let resultFormated = formatter.string(from: NSNumber(value: result)) else { return nil
       }
       return resultFormated
     }

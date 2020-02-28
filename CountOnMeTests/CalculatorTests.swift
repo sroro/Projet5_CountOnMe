@@ -23,8 +23,16 @@ class CalculatorTests: XCTestCase {
     // test isCorrect
     func testGivenNumberOne_WhenLastElementIsMore_ThenExpressionIsNotCorrect() {
         calculator.addNumber("1")
-        calculator.addOperattor(" + ")
+        calculator.addition()
         XCTAssertFalse(calculator.expressionIsCorrect)
+        
+    }
+    
+        func testGivenCalculStringHaveResult_WhenReset_ThenCalculStringIsEmpty(){
+        calculator.reset()
+               
+               XCTAssertEqual(calculator.calculString, "")
+        
         
     }
     
@@ -40,7 +48,10 @@ class CalculatorTests: XCTestCase {
     func testGivenCalculStringLastWithOperator_WhenAddingOperator_ThenNotificationTriggered(){
         calculator.calculString = "2 + "
         expectation(forNotification: NSNotification.Name(rawValue: "error"), object: nil, handler: nil)
-        calculator.addOperattor(" - ")
+        calculator.substraction()
+        calculator.addition()
+        calculator.multiplication()
+        calculator.division()
         waitForExpectations(timeout: 0.1, handler: nil)
     }
     
@@ -51,6 +62,13 @@ class CalculatorTests: XCTestCase {
         calculator.equal()
         waitForExpectations(timeout: 0.1, handler: nil)
     }
+    
+    func testGivenCalculStringStartWithOperator_WhenMakingCalculation_ThenNotificationTriggered(){
+               calculator.multiplication()
+             
+               XCTAssertEqual(calculator.calculString, "")
+           
+       }
 
     
     
@@ -58,7 +76,7 @@ class CalculatorTests: XCTestCase {
     func testGivenCalculstringIsEmpty_WhenMakeMinusOperation_ThenHaveResult(){
         
         calculator.addNumber("1")
-        calculator.addOperattor(" - ")
+        calculator.substraction()
         calculator.addNumber("1")
         calculator.equal()
         
@@ -66,24 +84,15 @@ class CalculatorTests: XCTestCase {
     }
     
     
-    // test break in addOperator
-    func testGivenCalculstringIsEmpty_WhenDoOperation_ThenHaveResult(){
-        
-        calculator.addNumber("1")
-        calculator.addOperattor(" d ")
-        calculator.addNumber("1")
-        calculator.equal()
-        
-        XCTAssertEqual(calculator.calculString, "11")
-    }
+  
     
     func testGivenCalculIsEmpty_WhenMakingVariousOperation_ThenResultIsGood(){
           
         calculator.addNumber("6")
-        calculator.addOperattor(" + ")
+        calculator.addition()
         calculator.addNumber("4")
         calculator.equal()
-        calculator.addOperattor(" / ")
+        calculator.division()
         calculator.addNumber("5")
         calculator.equal()
                 
@@ -127,7 +136,7 @@ class CalculatorTests: XCTestCase {
     func testGivenCalculstringIsEmpty_WhenMakeMultiplicationOperation_ThenHaveResult(){
            
            calculator.addNumber("2")
-           calculator.addOperattor(" * ")
+           calculator.multiplication()
            calculator.addNumber("3")
            calculator.equal()
            
@@ -137,7 +146,7 @@ class CalculatorTests: XCTestCase {
     func testGivenCalculstringIsEmpty_WhenMakeDivisionOperation_ThenHaveResult(){
         
         calculator.addNumber("6")
-        calculator.addOperattor(" / ")
+        calculator.division()
         calculator.addNumber("3")
         calculator.equal()
         
@@ -149,9 +158,9 @@ class CalculatorTests: XCTestCase {
     func testGivenCalculstringIsEmpty_WhenMakeDAdditionAndMultiplicationOperation_ThenHaveResultInGoodOrder(){
 
         calculator.addNumber("6")
-        calculator.addOperattor(" + ")
+        calculator.addition()
         calculator.addNumber("3")
-        calculator.addOperattor(" * ")
+        calculator.multiplication()
         calculator.addNumber("2")
         calculator.equal()
         
@@ -162,9 +171,9 @@ class CalculatorTests: XCTestCase {
     func testGivenCalculstringIsEmpty_WhenMakeDAdditionAndDivisionOperation_ThenHaveResultInGoodOrder(){
         
         calculator.addNumber("6")
-        calculator.addOperattor(" + ")
+        calculator.addition()
         calculator.addNumber("4")
-        calculator.addOperattor(" / ")
+        calculator.division()
         calculator.addNumber("2")
         calculator.equal()
         
@@ -175,11 +184,11 @@ class CalculatorTests: XCTestCase {
     func testGivenCalculstringIsEmpty_WhenMakeDAdditionAndMultiplicationAndDivisionOperation_ThenHaveResultInGoodOrder(){
            
            calculator.addNumber("6")
-           calculator.addOperattor(" + ")
+           calculator.addition()
            calculator.addNumber("4")
-           calculator.addOperattor(" * ")
+           calculator.multiplication()
            calculator.addNumber("10")
-           calculator.addOperattor(" / ")
+           calculator.division()
            calculator.addNumber("2")
            calculator.equal()
            

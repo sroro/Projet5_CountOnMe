@@ -33,21 +33,22 @@ class ViewController: UIViewController {
     }
     
     @IBAction func tappedAdditionButton(_ sender: UIButton) {
-        calcul.addOperattor(" + ")
+        calcul.addition()
         
     }
     
     @IBAction func tappedSubstractionButton(_ sender: UIButton) {
-        calcul.addOperattor(" - ")
+        calcul.substraction()
     }
 
     @IBAction func tappedMultiplicationButton(_ sender: UIButton) {
-           calcul.addOperattor(" * ")
-       }
+           calcul.multiplication()
+    }
     
     @IBAction func tappedDivisionButton(_ sender: UIButton) {
-               calcul.addOperattor(" / ")
-           }
+            calcul.division()
+        
+    }
     
     @IBAction func tappedEqualButton(_ sender: UIButton) {
         calcul.equal()
@@ -55,7 +56,7 @@ class ViewController: UIViewController {
     
     
     @IBAction func tappedResetButton(_ sender: UIButton) {
-        calcul.calculString = ""
+        calcul.reset()
     }
     
    
